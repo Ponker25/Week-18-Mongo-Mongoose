@@ -1,40 +1,45 @@
-// Dependencies
 var express = require("express");
-var mongojs = require("mongojs");
-// Require request and cheerio. This makes the scraping possible
-var request = require("request");
-var cheerio = require("cheerio");
+var bodyParser = require("body-parser");
+var logger = require("morgan");
+var mongoose = require("mongoose");
+var path = require("path");
 
-// Initialize Express
+
+var port = process.env.PORT || 3000
+
 var app = express();
 
-// Database configuration
-var databaseUrl = "scraper";
-var collections = ["scrapedData"];
+app.use(logger("dev"));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 
-// Hook mongojs configuration to the db variable
-var db = mongojs(databaseUrl, collections);
-db.on("error", function(error) {
-  console.log("Database Error:", error);
+// Make public a static dir
+app.use(express.static("public"));
+
+// Set Handlebars.
+var exphbs = require("express-handlebars");
+
+app.engine("handlebars", exphbs({
+    defaultLayout: "main",
+    partialsDir: path.join(__dirname, "/views/layouts/partials")
+}));
+app.set("view engine", "handlebars");
+
+// Connect to the Mongo DB
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/newsNYT";
+
+// Set mongoose to leverage built in JavaScript ES6 Promises
+// Connect to the Mongo DB
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI);
+
+// Routes
+
+require("./routes/all-routes.js")(app);
+
+
+// Listen on port
+app.listen(port, function() {
+    console.log("App running on port " + port);
 });
-
-// Main route (simple Hello World Message)
-app.get("/", function(req, res) {
-  res.send("Hello world");
-});
-
-
-// SCRAPE CALL TO  WEBSITE HERE... 
-
-
-
-
-
-
-
-
-
-// Listen on port 3000
-app.listen(3000, function() {
-    console.log("App running on port 3000!");
-  });
