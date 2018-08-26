@@ -12,8 +12,9 @@ $("#loadArticles").on("click", function(event) {
 });
 
 // Save Article button
-$(".save").on("click", function(event) {
+$("#articleDiv").on("click", ".save", function (event) {
     event.preventDefault();
+   
     var thisId = $(this).attr("data-id");
     $.ajax({
         method: "POST",

@@ -8,20 +8,23 @@ module.exports = function(app) {
 //GET request to render Handlebars pages
 app.get("/", function(req, res) {
     db.Article.find({
-        "saved": false
-    }, function(error, data) {
+        saved: false
+    }).then(function (data, error) {
+        console.log(error, "this is the error");
+        console.log(data, "this is the data");
         var dbArticle = {
             article: data
         };
         console.log(dbArticle);
         res.render("home", dbArticle);
-    });
+    })
 });
 
 app.get("/saved", function(req, res) {
     db.Article.find({
-        "saved": true
-    }).populate("notes").exec(function(error, articles) {
+        saved: true
+    }).populate("notes").then(function (articles, error) {
+        console.log(articles);
         var dbArticle = {
             article: articles
         };
@@ -37,14 +40,15 @@ app.get("/scrape", function(req, res) {
         var $ = cheerio.load(html);
         var count = 0;
         // Now, get every h2 within an article tag, and do the following:
-        $("article").each(function(i, element) {
+        $("div.css-6p6lnl").each(function (i, element) {
             count = i;
             // Save an empty result object
             var result = {};
             // Add the title and summary of every link, and save them as properties of the result object
-            result.title = $(this).children("h2").text();
-            result.summary = $(this).children(".summary").text();
-            result.link = $(this).children("h2").children("a").attr("href");
+            result.title = $(element).text();
+            result.summary = $(element).find("p").text();
+            result.link = $(element).children().attr("href");
+            console.log(result);
             //save articles in database
             if (result.title && result.link && result.summary) {
                 db.Article.create(result)
@@ -63,13 +67,17 @@ app.get("/scrape", function(req, res) {
 
 // Save an article
 app.post("/articles/save/:id", function(req, res) {
+    console.log("save article endpoint was hit");
     // Use the article id to find and update its saved boolean
     db.Article.findOneAndUpdate({
             "_id": req.params.id
         }, {
-            "saved": true
+            saved: true
         })
-        .then(result=> res.redirect('/'))
+        .then(result => {
+            console.log(result);
+            res.end()
+        })
         .catch(err => res.json(err));
        
 });
@@ -80,8 +88,8 @@ app.post("/articles/delete/:id", function(req, res) {
     db.Article.findOneAndUpdate({
             "_id": req.params.id
         }, {
-            "saved": false,
-            "notes": []
+            saved: false,
+            notes: []
         })
         .then(result=> res.redirect('/'))// also to reload page  without deleted article
         .catch(err => res.json(err));
@@ -90,25 +98,19 @@ app.post("/articles/delete/:id", function(req, res) {
 
 // Create a new note
 app.post("/notes/save/:id", function(req, res) {
-
-    var newNote = new Note({
-        body: req.body.text,
-        article: req.params.id
-    });
     console.log(req.body)
         // And save the new note in the db
-    newNote.save(function(error, note) {
+    db.Note.create({
+            body: req.body.text,
+            article: req.params.id
+        }).then(function (note, error) {
         if (error) {
             console.log(error);
         } else {
             // Use the article id to find and update it's notes
             db.Article.findOneAndUpdate({
                     "_id": req.params.id
-                }, { //appends a specified value to an array
-                    $push: {
-                        "notes": note
-                    }
-                })
+                }, { $push: { notes: note._id } }, { new: true })
                 .then(result=> res.redirect('/saved'))
                 .catch(err => res.json(err));
                 
