@@ -1,6 +1,6 @@
-# Project Name
+# Mongo Newspaper Scraper
 
-### Week18 Mongo Newspaper Scraper
+### Coding Boot-Cap Week18 
 
 Deployed app on Heroku [here] ()
 
