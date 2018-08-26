@@ -4,7 +4,7 @@
 
 Deployed app on Heroku [here] (https://glacial-river-86264.herokuapp.com/)
 
-##Project Description:
+## Project Description:
 Whenever a user visits your site, the user can scrape stories from the New York Times and display them for the user. Each scraped article can be saved to the database. The app scrapes and displays the following information for each article:
 * Headline - the title of the article
 * Summary - a short summary of the article.
