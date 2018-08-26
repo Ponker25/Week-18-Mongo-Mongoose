@@ -1,6 +1,6 @@
 # Mongo Newspaper Scraper
 
-### Coding Boot-Cap Week18 
+### Coding Boot-Camp Week18 
 
 Deployed app on Heroku [here] (https://glacial-river-86264.herokuapp.com/)
 
