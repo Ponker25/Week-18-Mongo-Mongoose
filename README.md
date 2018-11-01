@@ -1,6 +1,6 @@
 # Mongo Newspaper Scraper
 
-![NY Times Scraper](/public/images/NewYorkTimes-Scraper.PNG)
+![NY Times Scraper](/public/assets/images/NewYorkTimes-Scraper.PNG)
 
 ### Coding Boot-Camp Week18 
 
