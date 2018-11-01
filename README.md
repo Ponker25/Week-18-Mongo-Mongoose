@@ -1,5 +1,7 @@
 # Mongo Newspaper Scraper
 
+![NY Times Scraper](/public/images/Clicky-Game.PNG)
+
 ### Coding Boot-Camp Week18 
 
 Deployed app on Heroku [here] (https://glacial-river-86264.herokuapp.com/)
