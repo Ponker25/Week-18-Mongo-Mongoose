@@ -1,5 +1,7 @@
 # Mongo Newspaper Scraper
 
+[Link to Project](https://glacial-river-86264.herokuapp.com/")
+
 ![NY Times Scraper](/public/assets/images/NewYorkTimes-Scraper.PNG)
 
 ### Coding Boot-Camp Week18 
@@ -16,6 +18,3 @@ Whenever a user visits your site, the user can scrape stories from the New York 
 ## Technologies Used: 
 
 Mongoose, Cheerio, Request, Node.js, MongoDB, Handlebars, Express, Materialize, Bootstrap, Affinity Photo. 
-
-
-![Screen Shot](public/assets/images/paper.png)
