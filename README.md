@@ -1,12 +1,10 @@
 # Mongo Newspaper Scraper
 
-[Link to Project](https://glacial-river-86264.herokuapp.com/")
-
 ![NY Times Scraper](/public/assets/images/NewYorkTimes-Scraper.PNG)
 
 ### Coding Boot-Camp Week18 
 
-Deployed app on Heroku [here] (https://glacial-river-86264.herokuapp.com/)
+[Deployed app on Heroku] (https://glacial-river-86264.herokuapp.com/)
 
 ## Project Description:
 Whenever a user visits your site, the user can scrape stories from the New York Times and display them for the user. Each scraped article can be saved to the database. The app scrapes and displays the following information for each article:
